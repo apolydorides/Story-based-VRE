@@ -6,12 +6,12 @@ public class AppleController : MonoBehaviour
 {
     Transform rightHand;
     Transform feedingTarget;
-    Transform transformMouth;
+    Transform fawnMouth;
     public bool reachedFor = false;
     protected bool trackingHand = false;
     bool trackingMouth = false;
     // tracks stage of event to handle trigger collisions - see OnTriggerEnter for how it works
-    int stage = 0;
+    public int stage = 0;
 
     // Start is called before the first frame update
     private void Start()
@@ -21,7 +21,7 @@ public class AppleController : MonoBehaviour
         GameEvents.current.onAppleEaten += OnEaten;
         rightHand = GameObject.FindGameObjectWithTag("Right Hand Slot").transform;
         feedingTarget = GameObject.FindGameObjectWithTag("Feeding Target").transform;
-        transformMouth = GameObject.FindGameObjectWithTag("Fawn Mouth").transform;
+        fawnMouth = GameObject.FindGameObjectWithTag("Fawn Mouth").transform;
     }
 
     private void Update()
@@ -45,11 +45,11 @@ public class AppleController : MonoBehaviour
             Debug.Log("Apple is tracking the hand!");
             gameObject.transform.SetPositionAndRotation(rightHand.position, rightHand.transform.rotation);
         }
-        else if (trackingMouth)
-        {
-            Debug.Log("Apple is tracking the hand!");
-            gameObject.transform.SetPositionAndRotation(transformMouth.position, transformMouth.rotation);
-        }
+        // else if (trackingMouth)
+        // {
+        //     Debug.Log("Apple is tracking the mouth!");
+        //     gameObject.transform.SetPositionAndRotation(fawnMouth.position, fawnMouth.rotation);
+        // }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,15 +61,13 @@ public class AppleController : MonoBehaviour
             stage++;
             print("collided with right hand!");
         }
-        else if (stage == 1 && other.gameObject.CompareTag("transform Mouth"))
+        else if (stage == 1 && other.gameObject.CompareTag("Fawn Mouth"))
         {
-            trackingMouth = true;
-            GameObject.FindGameObjectWithTag("transform").GetComponent<Animator>().SetBool("eating", false);
+            // trackingMouth = true;
             stage++;
+            Debug.Log("collided with the fawn's mouth");
             // on next animation end eating and destroy apple
         }
-
-        print("OnTriggerEnter(Collider other) of AppleController.cs called.");
     }
 
     private void OnAppleGrabbed()
@@ -85,8 +83,7 @@ public class AppleController : MonoBehaviour
     {
         if (reachedFor && trackingHand)
         {
-            // keeping reachedFor true so that on feeding event 
-            // reachedFor = false;
+            reachedFor = false;
             trackingHand = false;
             gameObject.SetActive(false);
             Collider thisCollider = gameObject.GetComponent<Collider>();
@@ -103,7 +100,7 @@ public class AppleController : MonoBehaviour
         float xzRatio = (xDifference / zDifference);
         float cumulativeHorizontal = 0f;
         Vector3 inAirPos = transform.position;
-        while (Vector3.Distance(transform.position, target.position) > 0.05f)
+        while (transform.position.y - target.position.y > 0.05f)
         {
             float zIncrement = Mathf.Sqrt(Mathf.Pow(4f * Time.deltaTime, 2) / (Mathf.Pow(xzRatio, 2) + 1));
             float xIncrement = zIncrement * xzRatio;
@@ -111,20 +108,34 @@ public class AppleController : MonoBehaviour
             cumulativeHorizontal += hIncrement;
             float newY = Mathf.Sqrt( ( ( horizontalDifference - cumulativeHorizontal ) * Mathf.Pow(yDifference, 2) ) / (horizontalDifference) ); 
             Debug.Log("Inside while loop of AppleThrown coroutine...");
+            if (!(newY >= 0))
+            {
+                newY = 0;
+            }
             inAirPos.Set(transform.position.x + xIncrement, target.position.y + newY, transform.position.z + zIncrement);
             transform.position = inAirPos;
+            if (transform.position.y - target.position.y < 0.05f)
+            {
+                Debug.Log("Vertical offset is: " + (transform.position.y - target.position.y).ToString());
+            }
             yield return null;
         }
         transform.position = target.position;
         print("Apple reached the target position.");
-        GameObject.FindGameObjectWithTag("Fawn").GetComponent<Animator>().SetBool("eating", true);
+        GameObject Fawn = GameObject.FindGameObjectWithTag("Fawn");
+        Fawn.GetComponent<Animator>().SetBool("eating", true);
+        trackingMouth = true;
     }
 
     // called from GameEvents.cs action, results from OnStateExit() of EatingBehavior.cs
     private void OnEaten()
     {
-        EventManager.Instance.taskCompleted();
-        gameObject.SetActive(false);
+        if (trackingMouth)
+        {
+            trackingMouth = false;
+            EventManager.Instance.taskCompleted();
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnDestroy()

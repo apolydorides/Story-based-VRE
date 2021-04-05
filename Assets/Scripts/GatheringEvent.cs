@@ -33,18 +33,6 @@ public class GatheringEvent : MonoBehaviour
         GameEvents.current.onActivityExit += ActivityDone;
     }
 
-    
-    // 1. deer gets distracted and moves off path
-    // 2. player looks at deer
-    // 3. player looks at apple tree
-    // 4. player prompted to move towards apple tree
-    // 5. player completed activity and looks back at deer
-    // 6. deer returns to trail and looks at player
-    // 7. player throws apple at deer's feet
-    // 8. deer performs eating animation
-    // 9. steps 7. and 8. repeated until player out of apples
-
-
     void Update()
     {
         if (justUpdated)
@@ -101,6 +89,13 @@ public class GatheringEvent : MonoBehaviour
                     Debug.Log("Case 8");
                     EventManager.Instance.eventLookObjects[0].gameObject.SetActive(true);
                     InputManager.current.tUnlocked = true;
+                    break;
+                case 9: // player allowed to return to path (Target position set in case 5)
+                    Debug.Log("Case 9");
+                    playerMotion.speed = 0f;
+                    GatheringEventText.Instance.GatheringInstructions.SetActive(false);
+                    EventManager.Instance.eventTransition = true;
+                    EventManager.Instance.motionLocked = false;
                     break;
                 default:
                     break;
@@ -167,7 +162,7 @@ public class GatheringEvent : MonoBehaviour
 
         
         print("Fawn looking at target.");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         justUpdated = true;
     }
 
@@ -186,7 +181,7 @@ public class GatheringEvent : MonoBehaviour
         Player.rotation.SetLookRotation(relativePos, Vector3.up);
 
         print("Player looking at target.");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         slerpTimer = 0f;
         justUpdated = true;
     }
