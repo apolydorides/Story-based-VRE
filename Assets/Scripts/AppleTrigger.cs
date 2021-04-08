@@ -25,7 +25,7 @@ public class AppleTrigger : MonoBehaviour
             Collider thisCollider = gameObject.GetComponent<Collider>();
             thisCollider.isTrigger = false;
             // debug check
-            Debug.Log("Need to pick apples!");
+            Debug.Log("AppleTrigger.cs OnTriggerEnter(Collider other)");
             // from unity editor we pass the grab handles and apples of each event
             EventManager.Instance.setObjectives(appleGrabHandles, apples, true);
             // passing the positions the player and fawn must interpolate to

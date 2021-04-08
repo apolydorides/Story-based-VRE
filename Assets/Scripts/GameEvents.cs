@@ -14,12 +14,23 @@ public class GameEvents : MonoBehaviour
         }
     
 
+    // start of whole gathering/feeding event
     public event Action onGatheringEnter;
     public void GatheringEnter()
     {
         if (onGatheringEnter != null)
         {
             onGatheringEnter();
+        }
+    }
+
+    // end of gathering/feeding event
+    public event Action onFeedingExit;
+    public void FeedingExit()
+    {
+        if (onFeedingExit != null)
+        {
+            onFeedingExit();
         }
     }
 
@@ -60,13 +71,4 @@ public class GameEvents : MonoBehaviour
             onAppleEaten();
         }
     }
-
-    // public event Action onActivityEnter;
-    // public void ActivityEnter()
-    // {
-    //     if (onActivityEnter != null)
-    //     {
-    //         onActivityEnter();
-    //     }
-    // }
 }

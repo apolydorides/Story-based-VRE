@@ -31,6 +31,7 @@ public class GatheringEvent : MonoBehaviour
 
         GameEvents.current.onGatheringEnter += EventStart;
         GameEvents.current.onActivityExit += ActivityDone;
+        GameEvents.current.onFeedingExit += EventFinished;
     }
 
     void Update()
@@ -110,6 +111,13 @@ public class GatheringEvent : MonoBehaviour
         fawnMotion.DecoupleSpeed = true;
         eventStep = 1;
         justUpdated = true;
+    }
+
+    void EventFinished()
+    {
+        fawnMotion.DecoupleSpeed = false;
+        eventStep = 0;
+        justUpdated = false;
     }
 
     // handles non-coroutine events, e.g. 

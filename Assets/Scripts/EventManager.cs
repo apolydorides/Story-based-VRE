@@ -16,11 +16,24 @@ public class EventManager : Singleton<EventManager>
     
     public Transform playerTargetPosition
     {get; set;}
+    // set this to 1 or 2 in Event scripts depending on whether:
+    // player reached event target ( 1 )
+    // or player returned back to path ( 2 )
+    private bool targetWasEvent = true;
     public void playerReachedTargetPosition()
     {
-        motionLocked = true;
         eventTransition = false;
-        InputManager.current.gUnlocked = true;
+        if (targetWasEvent)
+        {
+            motionLocked = true;
+            InputManager.current.gUnlocked = true;
+        }
+        else 
+        {
+            GameEvents.current.FeedingExit();
+        }
+        targetWasEvent = !targetWasEvent;
+        
     }
     public Transform fawnTargetPosition
     {get; set;}

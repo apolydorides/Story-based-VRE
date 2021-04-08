@@ -9,6 +9,7 @@ public class AppleController : MonoBehaviour
     Transform fawnMouth;
     public bool reachedFor = false;
     protected bool trackingHand = false;
+    bool collected = false;
     bool trackingMouth = false;
     // tracks stage of event to handle trigger collisions - see OnTriggerEnter for how it works
     public int stage = 0;
@@ -26,13 +27,13 @@ public class AppleController : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.current.tPressed && InputManager.current.tUnlocked)
+        if (InputManager.current.tPressed && InputManager.current.tUnlocked && collected)
         {
             InputManager.current.tUnlocked = false;
             StartCoroutine(AppleThrown(feedingTarget));
             Debug.Log("T pressed and coroutine should have started!");
         }
-        else if (InputManager.current.tUnlocked)
+        else if (InputManager.current.tUnlocked && collected)
         {
             transform.position = rightHand.position;
         }
@@ -72,8 +73,11 @@ public class AppleController : MonoBehaviour
 
     private void OnAppleGrabbed()
     {
+        // Collider will trigger before state of hand is 1 (maximum reach to match transforms)
+        // and collider also detects for each apple separately
         if (reachedFor)
         {
+            // so we only start tracking a hand if reach is maximum and its collider has been triggered
             print("OnAppleGrab() called.");
             trackingHand = true;
         }
@@ -88,6 +92,7 @@ public class AppleController : MonoBehaviour
             gameObject.SetActive(false);
             Collider thisCollider = gameObject.GetComponent<Collider>();
             thisCollider.isTrigger = true;
+            collected = true;
         }
     }
 
