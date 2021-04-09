@@ -12,6 +12,7 @@ TagManager:
   - Fawn
   - Feeding Target
   - Right Hand Slot
+  - GatheringRig
   layers:
   - Default
   - TransparentFX

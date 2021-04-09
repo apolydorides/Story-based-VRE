@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
+
 
 public class IKControl : MonoBehaviour
 {
@@ -11,7 +13,9 @@ public class IKControl : MonoBehaviour
     public bool ikActive = false;
     public Transform rightHandObj = null;
     public Transform lookObj = null;
-    private bool targetObjectGathered = false;
+    private bool targetObjectGrabbed = false;
+
+    Rig GatheringRig;
 
     float state = 0f;
     float elapsedTime = 0f;
@@ -25,6 +29,8 @@ public class IKControl : MonoBehaviour
         lookObj = null;
         animator = GetComponent<Animator>();
         state = 0f;
+        GatheringRig = GameObject.FindGameObjectWithTag("GatheringRig").GetComponent<Rig>();
+        GatheringRig.weight = 0;
     }
 
     // A callback for calculating IK
@@ -36,19 +42,23 @@ public class IKControl : MonoBehaviour
             // but only if at correct position for event
             if (InputManager.current.gPressed && InputManager.current.gUnlocked && (state == 0f || state == 1f))
             {
-                ikActive = !ikActive;
                 if (state == 1f)
                 {
                     ikActive = false;
-                    targetObjectGathered = true;
+                    targetObjectGrabbed = true;
                     GameEvents.current.ItemGrab();
                 }
                 else if (state == 0f)
                 {
+                    GatheringRig.weight = 1;
                     ikActive = true;
                 }
                 rightHandObj = EventManager.Instance.eventGrabHandles[EventManager.Instance.completedTasks];
                 lookObj = EventManager.Instance.eventLookObjects[EventManager.Instance.completedTasks];
+            }
+            else if (state == 0f && GatheringRig.weight > 0)
+            {
+                GatheringRig.weight = 0;
             }
 
             // if the IK is active set the position and rotation directly to the goal
@@ -85,7 +95,7 @@ public class IKControl : MonoBehaviour
 
             }
 
-            // else if the IK is not active, set the position and rotation of the and head back to the original position
+            // else if the IK is not active, set the position and rotation of the head back to the original position
             else
             {
                 if (state > 0f)
@@ -109,9 +119,9 @@ public class IKControl : MonoBehaviour
                     animator.SetLookAtWeight(0);
 
                     // if just arrived, flip boolean (dual purpose) and call that an event's task has been completed
-                    if (targetObjectGathered)
+                    if (targetObjectGrabbed)
                     {
-                        targetObjectGathered = false;
+                        targetObjectGrabbed = false;
                         EventManager.Instance.taskCompleted();
                     }
                     

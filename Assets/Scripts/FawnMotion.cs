@@ -40,19 +40,6 @@ public class FawnMotion : MonoBehaviour
             playerSpeed = playerMotion.speed;
             speed = playerSpeed;
         }
-
-        // keeping root motion disabled for now as over time on idle fawn creeps forward
-        // // if speed is greater than 0 and root motion is ON then speed has just gone >0 from 0
-        // // so disable root motion (so that walking animation doesn't affect position)
-        // if (speed > 0.5f && animator.applyRootMotion)
-        // {
-        //     animator.applyRootMotion = false;
-        // }
-        // // vice versa
-        // else if (speed < 0.5f && !animator.applyRootMotion)
-        // {
-        //     animator.applyRootMotion = true;
-        // }
         
         animator.SetFloat("velocity", speed);
     }

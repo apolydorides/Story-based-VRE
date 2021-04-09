@@ -133,7 +133,7 @@ public class GatheringEvent : MonoBehaviour
         float wholeDistance = Vector3.Distance(Fawn.position, target.position);
         float wholeAngle = Quaternion.Angle(Fawn.rotation, target.rotation);
         float slerpTimer = 0f;
-        while (Vector3.Distance(Fawn.position, target.position) > 0.05f)
+        while (Vector3.Distance(Fawn.position, target.position) > 0.1f)
         {
             slerpTimer += 0.5f * Time.deltaTime;
             float currentDistance = Vector3.Distance(Fawn.position, target.position);
