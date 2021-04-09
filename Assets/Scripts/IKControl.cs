@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 
 public class IKControl : MonoBehaviour
@@ -14,8 +13,6 @@ public class IKControl : MonoBehaviour
     public Transform rightHandObj = null;
     public Transform lookObj = null;
     private bool targetObjectGrabbed = false;
-
-    Rig GatheringRig;
 
     float state = 0f;
     float elapsedTime = 0f;
@@ -29,8 +26,6 @@ public class IKControl : MonoBehaviour
         lookObj = null;
         animator = GetComponent<Animator>();
         state = 0f;
-        GatheringRig = GameObject.FindGameObjectWithTag("GatheringRig").GetComponent<Rig>();
-        GatheringRig.weight = 0;
     }
 
     // A callback for calculating IK
@@ -50,15 +45,10 @@ public class IKControl : MonoBehaviour
                 }
                 else if (state == 0f)
                 {
-                    GatheringRig.weight = 1;
                     ikActive = true;
                 }
                 rightHandObj = EventManager.Instance.eventGrabHandles[EventManager.Instance.completedTasks];
                 lookObj = EventManager.Instance.eventLookObjects[EventManager.Instance.completedTasks];
-            }
-            else if (state == 0f && GatheringRig.weight > 0)
-            {
-                GatheringRig.weight = 0;
             }
 
             // if the IK is active set the position and rotation directly to the goal

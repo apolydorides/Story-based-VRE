@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using PathCreation;
 using System.Collections;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerMotion : MonoBehaviour
 {
@@ -10,10 +11,14 @@ public class PlayerMotion : MonoBehaviour
     public float distanceTravelled
     {get; set;}
 
+    Rig GatheringRig;
+
     private void Start()
     {
         distanceTravelled = 0f;
         speed = 0f;
+        GatheringRig = GameObject.FindGameObjectWithTag("GatheringRig").GetComponent<Rig>();
+        GatheringRig.weight = 0;
     }
     
     private int caseSwitch = 0;
@@ -44,6 +49,11 @@ public class PlayerMotion : MonoBehaviour
                 }
                 break;
             case 2:
+                if (GatheringRig.weight != 0)
+                {
+                    GatheringRig.weight = 0;
+                }
+
                 if (InputManager.current.wPressed)
                 {
                     Debug.Log("W Key Pressed!");
@@ -58,6 +68,10 @@ public class PlayerMotion : MonoBehaviour
                 break;
             case 3:
                 speed = 0f;
+                if (GatheringRig.weight != 1 && EventManager.Instance.activityOccuring)
+                {
+                    GatheringRig.weight = 1;
+                }
                 break;
             default:
                 Debug.Log("Motion error: @PlayerMotion.cs not properly detecting motion cases");

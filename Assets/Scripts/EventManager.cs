@@ -13,6 +13,7 @@ public class EventManager : Singleton<EventManager>
     // after smooth return to saved position (on event trigger) motionLocked->false
     public bool motionLocked = false;
     public bool eventTransition = false;
+    public bool activityOccuring = false;
     
     public Transform playerTargetPosition
     {get; set;}
@@ -25,6 +26,7 @@ public class EventManager : Singleton<EventManager>
         eventTransition = false;
         if (targetWasEvent)
         {
+            activityOccuring = true;
             motionLocked = true;
             InputManager.current.gUnlocked = true;
         }
@@ -83,6 +85,7 @@ public class EventManager : Singleton<EventManager>
 
     public void activityCompleted()
     {
+        activityOccuring = false;
         eventGrabHandles.Clear();
         eventLookObjects.Clear();
         InputManager.current.gUnlocked = false;
