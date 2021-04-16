@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     public static InputManager current;
 
     public bool wPressed {get; private set;}
+    public bool wUnlocked;
     public bool gPressed {get; private set;}
     public bool gUnlocked;
     public bool tPressed {get; private set;}

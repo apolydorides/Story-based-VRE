@@ -13,6 +13,7 @@ TagManager:
   - Feeding Target
   - Right Hand Slot
   - GatheringRig
+  - Tutorial Hand
   layers:
   - Default
   - TransparentFX
