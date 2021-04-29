@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     {
         current = this;
         wPressed = gPressed = gUnlocked = tPressed = tUnlocked = false;
+        wUnlocked = true;
     }
 
     // Update is called once per frame

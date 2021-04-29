@@ -36,6 +36,11 @@ public class PlayerMotion : MonoBehaviour
         switch(caseSwitch)
         {
             case 1:
+                if (!InputManager.current.wUnlocked)
+                {
+                    InputManager.current.wUnlocked = true;
+                }
+
                 if (InputManager.current.wPressed)
                 {
                     Debug.Log("W Key Pressed!");
@@ -49,6 +54,11 @@ public class PlayerMotion : MonoBehaviour
                 }
                 break;
             case 2:
+                if (!InputManager.current.wUnlocked)
+                {
+                    InputManager.current.wUnlocked = true;
+                }
+
                 if (GatheringRig.weight != 0)
                 {
                     GatheringRig.weight = 0;
@@ -67,6 +77,11 @@ public class PlayerMotion : MonoBehaviour
                 }
                 break;
             case 3:
+                if (InputManager.current.wUnlocked)
+                {
+                    InputManager.current.wUnlocked = false;
+                }
+
                 speed = 0f;
                 if (GatheringRig.weight != 1 && EventManager.Instance.activityOccuring)
                 {
