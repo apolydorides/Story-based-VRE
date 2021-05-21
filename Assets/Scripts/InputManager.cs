@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
     public bool tUnlocked;
 
     // store UDP input
-    string latestPacket = '';
+    public string latestPacket = "000000000000000";
 
     // Start is called before the first frame update
     private void Awake()
@@ -29,19 +29,19 @@ public class InputManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown("w") || String.Compare(getLatestUDPPacket(), '000000100000000'))
+        if (Input.GetKeyDown("w") || String.Equals(latestPacket, "000000100000000", StringComparison.OrdinalIgnoreCase))
         {
             wPressed = true;
             gPressed = false;
             tPressed = false;
         }
-        else if (Input.GetKeyDown("g") || String.Compare(getLatestUDPPacket(), '000000010000000'))
+        else if (Input.GetKeyDown("g") || String.Equals(latestPacket, "000000010000000", StringComparison.OrdinalIgnoreCase))
         {
             wPressed = false;
             gPressed = true;
             tPressed = false;
         }
-        else if (Input.GetKeyDown("t") || String.Compare(getLatestUDPPacket(), '000000001000000'))
+        else if (Input.GetKeyDown("t") || String.Equals(latestPacket, "000000001000000", StringComparison.OrdinalIgnoreCase))
         {
             wPressed = false;
             gPressed = false;

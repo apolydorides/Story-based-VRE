@@ -96,6 +96,7 @@ public class UDPObj : MonoBehaviour
 				IPEndPoint anyIP = new IPEndPoint (IPAddress.Any, 0);
 				byte[] data = client.Receive (ref anyIP);
 				string text = Encoding.UTF8.GetString (data);
+				InputManager.current.latestPacket = text;
 				print (">> " + text);
 				lastReceivedUDPPacket = text;
 				allReceivedUDPPackets = allReceivedUDPPackets + text;
