@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
     public bool tUnlocked;
 
     // store UDP input
-    public string latestPacket = "000000000000000";
+    public int popularLabel = 0;
 
     // Start is called before the first frame update
     private void Awake()
@@ -23,25 +23,31 @@ public class InputManager : MonoBehaviour
         current = this;
         wPressed = gPressed = gUnlocked = tPressed = tUnlocked = false;
         wUnlocked = true;
+        foreach (int i in packets)
+        {
+            packets[i] = 0;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown("w") || String.Equals(latestPacket, "000000100000000", StringComparison.OrdinalIgnoreCase))
+        // legacy: String.Equals(latestPacket, "0000003000000", StringComparison.OrdinalIgnoreCase)
+        // to check label directly from padded packet
+        
+        if (Input.GetKeyDown("w") || popularLabel == 1)
         {
             wPressed = true;
             gPressed = false;
             tPressed = false;
         }
-        else if (Input.GetKeyDown("g") || String.Equals(latestPacket, "000000010000000", StringComparison.OrdinalIgnoreCase))
+        else if (Input.GetKeyDown("g") || popularLabel == 2)
         {
             wPressed = false;
             gPressed = true;
             tPressed = false;
         }
-        else if (Input.GetKeyDown("t") || String.Equals(latestPacket, "000000001000000", StringComparison.OrdinalIgnoreCase))
+        else if (Input.GetKeyDown("t") || popularLabel = 3)
         {
             wPressed = false;
             gPressed = false;
@@ -55,5 +61,3 @@ public class InputManager : MonoBehaviour
         }
     }
 
-
-}

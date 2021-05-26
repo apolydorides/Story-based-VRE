@@ -43,6 +43,8 @@ public class UDPObj : MonoBehaviour
 	public string allReceivedUDPPackets = "";
 	// clear this from time to time!
 
+	Queue<int> labelWindow = new Queue<int>();
+
 	// start from Unity3d
 	public void Start ()
 	{
@@ -88,7 +90,7 @@ public class UDPObj : MonoBehaviour
 	}
 
 	// Receive data, update packets received
-	private  void ReceiveData ()
+	private void ReceiveData ()
 	{
 		while (true) {
 
@@ -96,10 +98,15 @@ public class UDPObj : MonoBehaviour
 				IPEndPoint anyIP = new IPEndPoint (IPAddress.Any, 0);
 				byte[] data = client.Receive (ref anyIP);
 				string text = Encoding.UTF8.GetString (data);
-				InputManager.current.latestPacket = text;
 				print (">> " + text);
 				lastReceivedUDPPacket = text;
 				allReceivedUDPPackets = allReceivedUDPPackets + text;
+				labelWindow.Enqueue(packetToLabel(text));
+				if (Queue.Count() > 100)
+				{
+					Queue.Dequeue();
+				}
+				InputManager.current.popularLabel = getPopularLabel();
 
 			} catch (Exception err) {
 				print (err.ToString ());
@@ -133,6 +140,44 @@ public class UDPObj : MonoBehaviour
 			receiveThread.Abort (); 
 
 		client.Close ();
+	}
+
+	// Extracts label from UDP packet
+	private int packetToLabel(string packet)
+	{
+		int[] packetInIntegers = new int[packet.String.Length];
+		for(i = 0; i < packet.String.Length; i++)
+		{
+			packetInIntegers[i] = int(packet[i]);
+		}
+		Array.Sort(packetInIntegers);
+		Array.Reverse(packetInIntegers);
+		receivedLabel = packetInIntegers[0];
+
+		return receivedLabel;
+	}
+
+	// Popularity voting for window of received labels
+	private int getPopularLabel()
+	{
+		Dictionary<int, int> labelVotes = new Dictionary<int, int>();
+		for (i = 0; i < labelWindow.Count(); i++)
+		{
+			if (labelVotes.ContainsKey(Queue[i]))
+			{
+				labelVotes[Queue[i]]++;
+			}
+			else
+			{
+				labelVotes.Add(Queue[i], 0);
+			}
+		}
+		KeyValuePair<int, int> currentPopular = labelVotes.First();
+		foreach(KeyValuePair<int, int> label in labelVotes)
+		{
+			if (label.Value > currentPopular.Value) currentPopular = label;
+		}
+		return currentPopular.Key;
 	}
 
 }
