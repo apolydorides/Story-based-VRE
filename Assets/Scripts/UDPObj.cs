@@ -108,6 +108,7 @@ public class UDPObj : MonoBehaviour
 					labelWindow.RemoveAt(0);
 				}
 				InputManager.current.popularLabel = getPopularLabel();
+				InputManager.current.testLabel = text;
 
 			} catch (Exception err) {
 				print (err.ToString ());
