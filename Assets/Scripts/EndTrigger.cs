@@ -9,7 +9,7 @@ public class EndTrigger : MonoBehaviour
     Transform wrist;
     TwoBoneIKConstraint wavingConstraint;
     TwoBoneIKConstraint appleConstraint;
-    int waveCounter = 0;
+    int waveCounter = -1;
     int wavesCompleted = 0;
     bool wavingOccuring = false;
     string waveDirection = "null";
@@ -22,12 +22,7 @@ public class EndTrigger : MonoBehaviour
         // access player's rig from here so that coroutine can transition it smoothly
         playerRig = GameObject.FindGameObjectWithTag("Runtime Rig").GetComponent<Rig>();
         wavingConstraint = playerRig.GetComponentsInChildren<TwoBoneIKConstraint>()[0];
-        wavingConstraint.weight = 0;
         appleConstraint = playerRig.GetComponentsInChildren<TwoBoneIKConstraint>()[1];
-        appleConstraint.weight = 0;
-        playerRig.weight = 1;
-        InputManager.current.aUnlocked = false;
-        InputManager.current.dUnlocked = false;
     }
 
     // Update is called once per frame
@@ -35,6 +30,7 @@ public class EndTrigger : MonoBehaviour
     {
         if (waveCounter >= 10 && wavesCompleted == 10)
         {
+            print("EndTrigger wavecount and wavesCompleted == 10");
             waveCounter = -1;
         }
 
@@ -98,6 +94,7 @@ public class EndTrigger : MonoBehaviour
             counter++;
         }
         StartCoroutine("RaiseHand");
+        waveCounter = 0;
     }
     
     IEnumerator RaiseHand()

@@ -114,8 +114,8 @@ public class IntroTrigger : MonoBehaviour
         }
         playerRig.weight = 0;
         appleConstraint.weight = 1;
-        GameObject.FindGameObjectWithTag("Fawn").GetComponent<FawnMotion>().DecoupleSpeed = false;
         EventManager.Instance.motionLocked = false;
+        GameObject.FindGameObjectWithTag("Fawn").GetComponent<FawnMotion>().DecoupleSpeed = false;
         yield return null;
     }
 
