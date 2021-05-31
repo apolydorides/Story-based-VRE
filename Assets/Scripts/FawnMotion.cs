@@ -7,6 +7,7 @@ public class FawnMotion : MonoBehaviour
 {
     Animator animator;
     public PathCreator fawnPath;
+    public bool speedOverride = false;
     public float speed;
     float playerSpeed;
     public float distanceTravelled
@@ -48,11 +49,11 @@ public class FawnMotion : MonoBehaviour
     {
         // performing movement changes within FixedUpdate for smoother motion (matches output frame rate)
         // only when speed is coupled to player's does the fawn move along the path
-        if (!DecoupleSpeed)
+        if (!DecoupleSpeed || speedOverride)
         {
             distanceTravelled += speed * Time.deltaTime;
-            transform.position = fawnPath.path.GetPointAtDistance(distanceTravelled);
-            transform.rotation = fawnPath.path.GetRotationAtDistance(distanceTravelled);
+            transform.position = fawnPath.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+            transform.rotation = fawnPath.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
         }
     }
 }

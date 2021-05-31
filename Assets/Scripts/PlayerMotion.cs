@@ -101,8 +101,8 @@ public class PlayerMotion : MonoBehaviour
         {
             case 1:
                 distanceTravelled += speed * Time.deltaTime;
-                transform.position = playerPath.path.GetPointAtDistance(distanceTravelled);
-                transform.rotation = playerPath.path.GetRotationAtDistance(distanceTravelled);
+                transform.position = playerPath.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                transform.rotation = playerPath.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
                 break;
             case 2:
                 if (Vector3.Distance(transform.position, EventManager.Instance.playerTargetPosition.position) > 0.1f)
