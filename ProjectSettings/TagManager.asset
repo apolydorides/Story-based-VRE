@@ -12,8 +12,9 @@ TagManager:
   - Fawn
   - Feeding Target
   - Right Hand Slot
-  - GatheringRig
   - Tutorial Hand
+  - Runtime Rig
+  - WavingEffector
   layers:
   - Default
   - TransparentFX

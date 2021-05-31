@@ -13,6 +13,10 @@ public class InputManager : MonoBehaviour
     public bool gUnlocked;
     public bool tPressed {get; private set;}
     public bool tUnlocked;
+    public bool dPressed {get; private set;}
+    public bool dUnlocked;
+    public bool aPressed {get; private set;}
+    public bool aUnlocked;
 
     // store UDP input
     public int popularLabel = 0;
@@ -22,7 +26,7 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         current = this;
-        wPressed = gPressed = gUnlocked = tPressed = tUnlocked = false;
+        wPressed = gPressed = gUnlocked = tPressed = tUnlocked = dPressed = dUnlocked = aPressed = aUnlocked = false;
         wUnlocked = true;
     }
 
@@ -32,29 +36,53 @@ public class InputManager : MonoBehaviour
         // legacy: String.Equals(latestPacket, "0000003000000", StringComparison.OrdinalIgnoreCase)
         // to check label directly from padded packet
         
-        if (Input.GetKeyDown("w") || (popularLabel== 1) || (testLabel == "a"))
+        if ((Input.GetKeyDown("w") || (popularLabel== 1) || (testLabel == "1")) && wUnlocked)
         {
             wPressed = true;
             gPressed = false;
             tPressed = false;
+            dPressed = false;
+            aPressed = false;
         }
-        else if (Input.GetKeyDown("g") || (popularLabel == 2) || (testLabel == "d"))
+        else if ((Input.GetKeyDown("g") || (popularLabel == 2) || (testLabel == "2")) && gUnlocked)
         {
             wPressed = false;
             gPressed = true;
             tPressed = false;
+            dPressed = false;
+            aPressed = false;
         }
-        else if (Input.GetKeyDown("t") || (popularLabel == 3) || (testLabel == "c"))
+        else if ((Input.GetKeyDown("t") || (popularLabel == 3) || (testLabel == "3")) && tUnlocked)
         {
             wPressed = false;
             gPressed = false;
             tPressed = true;
+            dPressed = false;
+            aPressed = false;
+        }
+        else if (Input.GetKeyDown("d") || (popularLabel == 4) || (testLabel == "4"))
+        {
+            wPressed = false;
+            gPressed = false;
+            tPressed = false;
+            dPressed = true;
+            aPressed = false;
+        }
+        else if (Input.GetKeyDown("a") || (popularLabel == 5) || (testLabel == "5"))
+        {
+            wPressed = false;
+            gPressed = false;
+            tPressed = false;
+            dPressed = false;
+            aPressed = true;
         }
         else
         {
             wPressed = false;
             gPressed = false;
             tPressed = false;
+            aPressed = false;
+            dPressed = false;
         }
     }
 

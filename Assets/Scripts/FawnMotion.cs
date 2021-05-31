@@ -28,7 +28,7 @@ public class FawnMotion : MonoBehaviour
         ThePlayer = GameObject.FindGameObjectWithTag("Main Character");
         playerMotion = ThePlayer.GetComponent<PlayerMotion>();
         playerSpeed = playerMotion.speed;
-        DecoupleSpeed = false;
+        DecoupleSpeed = true;
     }
 
     // Update is called once per frame

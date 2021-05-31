@@ -11,14 +11,15 @@ public class PlayerMotion : MonoBehaviour
     public float distanceTravelled
     {get; set;}
 
-    Rig GatheringRig;
+    float timer = 0f;
+
+    Rig playerRig;
 
     private void Start()
     {
         distanceTravelled = 0f;
         speed = 0f;
-        GatheringRig = GameObject.FindGameObjectWithTag("GatheringRig").GetComponent<Rig>();
-        GatheringRig.weight = 0;
+        playerRig = GameObject.FindGameObjectWithTag("Runtime Rig").GetComponent<Rig>();
     }
     
     private int caseSwitch = 0;
@@ -59,9 +60,9 @@ public class PlayerMotion : MonoBehaviour
                     InputManager.current.wUnlocked = true;
                 }
 
-                if (GatheringRig.weight != 0)
+                if (playerRig.weight != 0)
                 {
-                    GatheringRig.weight = 0;
+                    playerRig.weight = 0;
                 }
 
                 if (InputManager.current.wPressed)
@@ -83,9 +84,9 @@ public class PlayerMotion : MonoBehaviour
                 }
 
                 speed = 0f;
-                if (GatheringRig.weight != 1 && EventManager.Instance.activityOccuring)
+                if (playerRig.weight != 1 && EventManager.Instance.activityOccuring)
                 {
-                    GatheringRig.weight = 1;
+                    playerRig.weight = 1;
                 }
                 break;
             default:

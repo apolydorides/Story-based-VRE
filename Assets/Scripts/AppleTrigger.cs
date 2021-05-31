@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Animations.Rigging;
 
 // This is a script including the logic of the event trigger that exists in the player's path
 public class AppleTrigger : MonoBehaviour
@@ -11,10 +12,15 @@ public class AppleTrigger : MonoBehaviour
     public List<Transform> appleGrabHandles;
     public Transform playerEndPosition;
     public Transform fawnEndPosition;
+    Rig playerRig;
+    TwoBoneIKConstraint wavingConstraint;
+    TwoBoneIKConstraint appleConstraint;
 
     void Start() 
     {
-        
+        playerRig = GameObject.FindGameObjectWithTag("Runtime Rig").GetComponent<Rig>();
+        wavingConstraint = playerRig.GetComponentsInChildren<TwoBoneIKConstraint>()[0];
+        appleConstraint = playerRig.GetComponentsInChildren<TwoBoneIKConstraint>()[1];
     }
 
     private void OnTriggerEnter(Collider other)
