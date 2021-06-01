@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
         // legacy: String.Equals(latestPacket, "0000003000000", StringComparison.OrdinalIgnoreCase)
         // to check label directly from padded packet
         
-        if ((Input.GetKeyDown("w") || (popularLabel== 1) || (testLabel == "1")) && wUnlocked)
+        if ((Input.GetKeyDown("w") || (popularLabel== 2) || (popularLabel== 3)) && wUnlocked)
         {
             wPressed = true;
             gPressed = false;
@@ -44,7 +44,7 @@ public class InputManager : MonoBehaviour
             dPressed = false;
             aPressed = false;
         }
-        else if ((Input.GetKeyDown("g") || (popularLabel == 2) || (testLabel == "2")) && gUnlocked)
+        else if ((Input.GetKeyDown("g") || (popularLabel == 4)) && gUnlocked)
         {
             wPressed = false;
             gPressed = true;
@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
             dPressed = false;
             aPressed = false;
         }
-        else if ((Input.GetKeyDown("t") || (popularLabel == 3) || (testLabel == "3")) && tUnlocked)
+        else if ((Input.GetKeyDown("t") || (popularLabel == 5)) && tUnlocked)
         {
             wPressed = false;
             gPressed = false;
@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour
             dPressed = false;
             aPressed = false;
         }
-        else if (Input.GetKeyDown("d") || (popularLabel == 4) || (testLabel == "4"))
+        else if (Input.GetKeyDown("d") || (popularLabel == 6))
         {
             wPressed = false;
             gPressed = false;
@@ -68,7 +68,7 @@ public class InputManager : MonoBehaviour
             dPressed = true;
             aPressed = false;
         }
-        else if (Input.GetKeyDown("a") || (popularLabel == 5) || (testLabel == "5"))
+        else if (Input.GetKeyDown("a") || (popularLabel == 7))
         {
             wPressed = false;
             gPressed = false;

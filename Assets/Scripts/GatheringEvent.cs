@@ -43,22 +43,22 @@ public class GatheringEvent : MonoBehaviour
                 case 1: // deer gets distracted and moves off the path
                     StartCoroutine(FawnApproachTarget(EventManager.Instance.fawnTargetPosition));
                     EventManager.Instance.motionLocked = true;
-                    GatheringEventText.Instance.GatheringInstructions.SetActive(true);
-                    GatheringEventText.Instance.Instructions.text = "The deer appears to be moving out of the trail!";
+                    TextController.Instance.TextActive(true);
+                    TextController.Instance.textInstructions.text = "The deer appears to be moving out of the trail!";
                     break;
                 case 2: // player looks at the deer
-                    GatheringEventText.Instance.GatheringInstructions.SetActive(false);
+                    TextController.Instance.TextActive(false);
                     StartCoroutine(PlayerLookTowardsTarget(Fawn));
                     break;
                 case 3: // player looks at the apple tree
-                    GatheringEventText.Instance.GatheringInstructions.SetActive(true);
-                    GatheringEventText.Instance.Instructions.text = "Maybe some apples will gain its attention!";
+                    TextController.Instance.TextActive(true);
+                    TextController.Instance.textInstructions.text = "Maybe some apples will gain its attention!";
                     StartCoroutine(PlayerLookTowardsTarget(EventManager.Instance.playerTargetPosition));
                     break;
                 case 4: // player prompted to move towards apple tree
                     Debug.Log("Case 4");
                     playerMotion.speed = 0f;
-                    GatheringEventText.Instance.GatheringInstructions.SetActive(false);
+                    TextController.Instance.TextActive(false);
                     EventManager.Instance.eventTransition = true;
                     EventManager.Instance.motionLocked = false;
                     break;
@@ -78,13 +78,13 @@ public class GatheringEvent : MonoBehaviour
                     EventManager.Instance.fawnTargetPosition.position = fawnPath.path.GetPointAtDistance(closestDistance);
                     EventManager.Instance.fawnTargetPosition.rotation = Quaternion.LookRotation(Player.position - Fawn.position, Vector3.up);;
                     StartCoroutine(FawnApproachTarget(EventManager.Instance.fawnTargetPosition));
-                    GatheringEventText.Instance.GatheringInstructions.SetActive(true);
-                    GatheringEventText.Instance.Instructions.text = "The deer seems to be interested in the apples you are holding!";
+                    TextController.Instance.TextActive(true);
+                    TextController.Instance.textInstructions.text = "The deer seems to be interested in the apples you are holding!";
                     break;
                 case 7:  // activity: player looks at fawn and prompted to feed it the apples
                     Debug.Log("Case 7");
                     StartCoroutine(PlayerLookTowardsTarget(Fawn));
-                    GatheringEventText.Instance.Instructions.text = "Try giving it some apples!";
+                    TextController.Instance.textInstructions.text = "Try giving it some apples!";
                     break;
                 case 8:  // player allowed to feed the deer
                     Debug.Log("Case 8");
@@ -94,7 +94,7 @@ public class GatheringEvent : MonoBehaviour
                 case 9: // player allowed to return to path (Target position set in case 5)
                     Debug.Log("Case 9");
                     playerMotion.speed = 0f;
-                    GatheringEventText.Instance.GatheringInstructions.SetActive(false);
+                    TextController.Instance.TextActive(false);
                     EventManager.Instance.eventTransition = true;
                     EventManager.Instance.motionLocked = false;
                     break;

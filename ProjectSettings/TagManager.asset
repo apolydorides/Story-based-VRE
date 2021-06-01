@@ -8,13 +8,13 @@ TagManager:
   - Right Hand
   - Event Object
   - Fawn Mouth
-  - Gathering Instructions
   - Fawn
   - Feeding Target
   - Right Hand Slot
   - Tutorial Hand
   - Runtime Rig
   - WavingEffector
+  - Text Instructions
   layers:
   - Default
   - TransparentFX
