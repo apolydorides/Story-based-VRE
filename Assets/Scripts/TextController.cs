@@ -64,7 +64,7 @@ public class TextController : Singleton<TextController>
         {
             voiceInstructions.clip = flexion;
         }
-        else if (dofCue == "attractAttention")
+        else if (dofCue == "Attract attention")
         {
             voiceInstructions.clip = moveForward;
         }

@@ -14,6 +14,7 @@ using UnityEngine;
 using System.Collections;
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
@@ -44,6 +45,7 @@ public class UDPObj : MonoBehaviour
 	public string allReceivedUDPPackets = "";
 	// clear this from time to time!
 
+
 	int majorityLabel = -1;
 
 	List<int> labelWindow = new List<int>();
@@ -55,7 +57,7 @@ public class UDPObj : MonoBehaviour
 	}
 
 	// OnGUI
-	/* void OnGUI ()
+	void OnGUI ()
 	{
 		Rect rectObj = new Rect (40, 10, 200, 400);
 		GUIStyle style = new GUIStyle ();
@@ -70,7 +72,7 @@ public class UDPObj : MonoBehaviour
 			sendData (strMessageSend + "\n");
 		}
 
-	} */
+	}
 
 	// Initialization code
 	private void init ()
@@ -104,12 +106,17 @@ public class UDPObj : MonoBehaviour
 				print (">> " + text);
 				lastReceivedUDPPacket = text;
 				allReceivedUDPPackets = allReceivedUDPPackets + text;
-				labelWindow.Add(packetToLabel(text));
+				labelWindow.Add(packetToLabel(lastReceivedUDPPacket));
 				if (labelWindow.Count > 100)
 				{
 					labelWindow.RemoveAt(0);
 				}
+				if (allReceivedUDPPackets.Length > 50)
+				{
+					allReceivedUDPPackets = "";
+				}
 				InputManager.current.popularLabel = getPopularLabel();
+				majorityLabel = InputManager.current.popularLabel;
 				InputManager.current.testLabel = text;
 
 			} catch (Exception err) {
@@ -149,6 +156,7 @@ public class UDPObj : MonoBehaviour
 	// Extracts label from UDP packet
 	private int packetToLabel(string packet)
 	{
+		/* This was for padded packets
 		int[] packetInIntegers = new int[packet.Length];
 		for(int i = 0; i < packet.Length; i++)
 		{
@@ -156,7 +164,9 @@ public class UDPObj : MonoBehaviour
 		}
 		Array.Sort(packetInIntegers);
 		Array.Reverse(packetInIntegers);
-		int receivedLabel = packetInIntegers[0];
+		int receivedLabel = packetInIntegers[0]; 
+		*/
+		int receivedLabel = Convert.ToInt32(packet);
 
 		return receivedLabel;
 	}
@@ -164,30 +174,10 @@ public class UDPObj : MonoBehaviour
 	// Popularity voting for window of received labels
 	private int getPopularLabel()
 	{
-		Dictionary<int, int> labelVotes = new Dictionary<int, int>();
-		for (int i = 0; i < labelWindow.Count; i++)
-		{
-			if (labelVotes.ContainsKey(labelWindow.IndexOf(i)))
-			{
-				labelVotes[labelWindow.IndexOf(i)]++;
-			}
-			else
-			{
-				labelVotes.Add(labelWindow.IndexOf(i), 0);
-			}
-		}
-		bool myIndexer = false;
-		KeyValuePair<int, int> currentPopular;
-		foreach(KeyValuePair<int, int> label in labelVotes)
-		{
-			if (!myIndexer)
-			{
-				currentPopular = label;
-				myIndexer = true;
-			}
-			if (label.Value > currentPopular.Value) currentPopular = label;
-		}
-		return currentPopular.Key;
+		int mostCommon = labelWindow.GroupBy(i => i).OrderBy(g => g.Count()).Select(g => g.Key).ToList().Last();
+		return mostCommon;
 	}
 
+
+	
 }

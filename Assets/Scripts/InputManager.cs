@@ -44,7 +44,7 @@ public class InputManager : MonoBehaviour
             dPressed = false;
             aPressed = false;
         }
-        else if ((Input.GetKeyDown("g") || (popularLabel == 4)) && gUnlocked)
+        else if ((Input.GetKeyDown("g") || (popularLabel == 2)) && gUnlocked)
         {
             wPressed = false;
             gPressed = true;
@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
             dPressed = false;
             aPressed = false;
         }
-        else if ((Input.GetKeyDown("t") || (popularLabel == 5)) && tUnlocked)
+        else if ((Input.GetKeyDown("t") || (popularLabel == 2)) && tUnlocked)
         {
             wPressed = false;
             gPressed = false;
@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour
             dPressed = false;
             aPressed = false;
         }
-        else if (Input.GetKeyDown("d") || (popularLabel == 6))
+        else if (Input.GetKeyDown("d") || (popularLabel == 2) && dUnlocked)
         {
             wPressed = false;
             gPressed = false;
@@ -68,7 +68,7 @@ public class InputManager : MonoBehaviour
             dPressed = true;
             aPressed = false;
         }
-        else if (Input.GetKeyDown("a") || (popularLabel == 7))
+        else if (Input.GetKeyDown("a") || (popularLabel == 2) && aUnlocked)
         {
             wPressed = false;
             gPressed = false;

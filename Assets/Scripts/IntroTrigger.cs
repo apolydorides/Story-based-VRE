@@ -89,6 +89,7 @@ public class IntroTrigger : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         wavingConstraint.weight = 1;
+        TextController.Instance.PlayVoice("Attract attention");
         yield return null;
     }
     IEnumerator LowerHand()
