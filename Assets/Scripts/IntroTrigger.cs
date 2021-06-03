@@ -40,11 +40,12 @@ public class IntroTrigger : MonoBehaviour
             InputManager.current.dUnlocked = false;
             InputManager.current.aUnlocked = false;
             StartCoroutine("LowerHand");
+            wavesCompleted = -1;
         }
 
         if ((wavingConstraint.weight == 1f) && waveCounter >= 0)
         {
-            if (InputManager.current.dPressed && !InputManager.current.aUnlocked)
+            if (InputManager.current.dPressed && InputManager.current.dUnlocked)
             {
                 InputManager.current.aUnlocked = true;
                 InputManager.current.dUnlocked = false;
@@ -52,7 +53,7 @@ public class IntroTrigger : MonoBehaviour
                 Debug.Log(waveCounter);
                 waveDirection = "right";
             }
-            else if (InputManager.current.aPressed && !InputManager.current.dUnlocked)
+            else if (InputManager.current.aPressed && InputManager.current.aUnlocked)
             {
                 InputManager.current.dUnlocked = true;
                 InputManager.current.aUnlocked = false;
@@ -89,7 +90,12 @@ public class IntroTrigger : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         wavingConstraint.weight = 1;
-        TextController.Instance.PlayVoice("Attract attention");
+        while (TextController.Instance.voiceInstructions.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        TextController.Instance.PlayVoice("Attract Attention");
+        InputManager.current.aUnlocked = true;
         yield return null;
     }
     IEnumerator LowerHand()
@@ -114,7 +120,8 @@ public class IntroTrigger : MonoBehaviour
             counter++;
         }
         playerRig.weight = 0;
-        appleConstraint.weight = 1;
+        appleConstraint.weight = 1;        
+        TextController.Instance.PlayVoice("Help Deer");
         EventManager.Instance.motionLocked = false;
         GameObject.FindGameObjectWithTag("Fawn").GetComponent<FawnMotion>().DecoupleSpeed = false;
         yield return null;

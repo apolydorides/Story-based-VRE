@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
         // legacy: String.Equals(latestPacket, "0000003000000", StringComparison.OrdinalIgnoreCase)
         // to check label directly from padded packet
         
-        if ((Input.GetKeyDown("w") || (popularLabel== 2) || (popularLabel== 3)) && wUnlocked)
+        if ((Input.GetKeyDown("w") || (popularLabel== 2)) && wUnlocked)
         {
             wPressed = true;
             gPressed = false;

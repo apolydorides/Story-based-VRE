@@ -97,6 +97,8 @@ public class GatheringEvent : MonoBehaviour
                     TextController.Instance.TextActive(false);
                     EventManager.Instance.eventTransition = true;
                     EventManager.Instance.motionLocked = false;
+                    InputManager.current.tUnlocked = false;
+                    InputManager.current.wUnlocked = true;
                     break;
                 default:
                     break;
@@ -192,5 +194,12 @@ public class GatheringEvent : MonoBehaviour
         yield return new WaitForSeconds(1f);
         slerpTimer = 0f;
         justUpdated = true;
+    }
+
+    void OnDestroy()
+    {
+        GameEvents.current.onGatheringEnter -= EventStart;
+        GameEvents.current.onActivityExit -= ActivityDone;
+        GameEvents.current.onFeedingExit -= EventFinished;
     }
 }

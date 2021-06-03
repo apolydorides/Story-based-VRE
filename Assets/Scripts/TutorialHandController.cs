@@ -43,53 +43,52 @@ public class TutorialHandController : MonoBehaviour
             timer = 0;
             tutorialHandAnimator.SetBool("Grip", false);
             handModel.enabled = false;
-            TextController.Instance.TextActive(false);
         }
         else if (InputManager.current.gPressed && InputManager.current.gUnlocked)
         {
             timer = 0;
             tutorialHandAnimator.SetBool("Extension", false);
             handModel.enabled = false;
-            TextController.Instance.TextActive(false);
         }
         else if (InputManager.current.tPressed && InputManager.current.tUnlocked)
         {
             timer = 0;
             tutorialHandAnimator.SetBool("Flexion", false);
             handModel.enabled = false;
-            TextController.Instance.TextActive(false);
         }
         else if ((InputManager.current.aPressed && InputManager.current.aUnlocked) || (InputManager.current.dPressed && InputManager.current.dUnlocked))
         {
             timer = 0;
             tutorialHandAnimator.SetBool("RadialUlnarDeviation", false);
             handModel.enabled = false;
-            TextController.Instance.TextActive(false);
         }
 
         // displaying appropriate tutorial hand animation if not already displayed
-        if (timer >= 3 && handModel.enabled == false)
+        if (timer >= 3 && handModel.enabled == false && !TextController.Instance.voiceInstructions.isPlaying)
         {
             handModel.enabled = true;
             if (InputManager.current.wUnlocked)
             {
+                TextController.Instance.PlayVoice("Move Forward");
                 tutorialHandAnimator.SetBool("Grip", true);
                 TextController.Instance.textInstructions.text = "Open and close your palm to move forward";
             }
             else if (InputManager.current.gUnlocked)
             {
                 tutorialHandAnimator.SetBool("Extension", true);
-                TextController.Instance.textInstructions.text = "Extend your hand upwards to move gather an apple";
+                TextController.Instance.PlayVoice("Pick Apple");
+                TextController.Instance.textInstructions.text = "Open and close your palm to gather an apple";
             }
             else if (InputManager.current.tUnlocked)
             {
                 tutorialHandAnimator.SetBool("Flexion", true);
-                TextController.Instance.textInstructions.text = "Flex your hand down to feed the deer";
+                TextController.Instance.PlayVoice("Feed Deer");
+                TextController.Instance.textInstructions.text = "Open and close your palm to feed the deer";
             }
             else if (InputManager.current.aUnlocked || InputManager.current.dUnlocked)
             {
                 tutorialHandAnimator.SetBool("RadialUlnarDeviation", true);
-                TextController.Instance.textInstructions.text = "Rotate your wrist laterally to wave";
+                TextController.Instance.textInstructions.text = "Open and close your palm to wave";
             }
             TextController.Instance.TextActive(true);
         }

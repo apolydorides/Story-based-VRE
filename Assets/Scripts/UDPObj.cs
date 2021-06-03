@@ -117,6 +117,13 @@ public class UDPObj : MonoBehaviour
 				}
 				InputManager.current.popularLabel = getPopularLabel();
 				majorityLabel = InputManager.current.popularLabel;
+				if (majorityLabel != -1 || majorityLabel != 1)
+				{
+					for (int i = 0; i < labelWindow.Count; i++)
+					{
+						labelWindow[i] = -1;
+					}
+				}
 				InputManager.current.testLabel = text;
 
 			} catch (Exception err) {

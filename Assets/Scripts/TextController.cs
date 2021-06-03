@@ -14,12 +14,12 @@ public class TextController : Singleton<TextController>
     public AudioClip helpDeer;
     public AudioClip attractAttention;
     public AudioClip rotateLeftRight;
-    public AudioClip extension;
-    public AudioClip flexion;
+    public AudioClip pickApple;
+    public AudioClip feedDeer;
     public AudioClip moveForward;
     public AudioClip returnToPath;
     public AudioClip moveToTree;
-    public AudioClip rotateGoodbye;
+    public AudioClip waveGoodbye;
     public AudioClip keepMovingGoodbye;
 
 
@@ -44,7 +44,7 @@ public class TextController : Singleton<TextController>
 
     public void PlayVoice(string dofCue)
     {
-        if (dofCue == "moveForward")
+        if (dofCue == "Move Forward")
         {
             voiceInstructions.clip = moveForward;
         }
@@ -56,21 +56,26 @@ public class TextController : Singleton<TextController>
         {
             voiceInstructions.clip = returnToPath;
         }
-        else if (dofCue == "extension")
+        else if (dofCue == "Pick Apple")
         {
-            voiceInstructions.clip = extension;
+            voiceInstructions.clip = pickApple;
         }
-        else if (dofCue == "flexion")
+        else if (dofCue == "Feed Deer")
         {
-            voiceInstructions.clip = flexion;
+            voiceInstructions.clip = feedDeer;
         }
-        else if (dofCue == "Attract attention")
+        else if (dofCue == "Attract Attention")
         {
-            voiceInstructions.clip = moveForward;
+            voiceInstructions.clip = attractAttention;
         }
-        else if (dofCue == "waveGoodbye")
+        else if (dofCue == "Wave Goodbye")
         {
-            voiceInstructions.clip = moveForward;
+            voiceInstructions.clip = waveGoodbye;
         }
+        else if (dofCue == "Help Deer")
+        {
+            voiceInstructions.clip = helpDeer;
+        }
+        voiceInstructions.Play();
     }
 }

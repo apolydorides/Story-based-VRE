@@ -105,6 +105,12 @@ public class EndTrigger : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         wavingConstraint.weight = 1;
+        while (TextController.Instance.voiceInstructions.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        TextController.Instance.PlayVoice("Wave Goodbye");
+        InputManager.current.aUnlocked = true;
         yield return null;
     }
     IEnumerator LowerHand()

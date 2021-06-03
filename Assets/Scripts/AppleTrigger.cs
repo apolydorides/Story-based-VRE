@@ -19,8 +19,6 @@ public class AppleTrigger : MonoBehaviour
     void Start() 
     {
         playerRig = GameObject.FindGameObjectWithTag("Runtime Rig").GetComponent<Rig>();
-        wavingConstraint = playerRig.GetComponentsInChildren<TwoBoneIKConstraint>()[0];
-        appleConstraint = playerRig.GetComponentsInChildren<TwoBoneIKConstraint>()[1];
     }
 
     private void OnTriggerEnter(Collider other)
