@@ -45,7 +45,7 @@ public class PlayerMotion : MonoBehaviour
                 if (InputManager.current.wPressed)
                 {
                     Debug.Log("W Key Pressed!");
-                    speed = 2f;
+                    speed = 3f;
                 }
                 else if (speed > 0f)
                 {

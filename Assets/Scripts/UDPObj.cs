@@ -107,17 +107,17 @@ public class UDPObj : MonoBehaviour
 				lastReceivedUDPPacket = text;
 				allReceivedUDPPackets = allReceivedUDPPackets + text;
 				labelWindow.Add(packetToLabel(lastReceivedUDPPacket));
-				if (labelWindow.Count > 100)
+				if (labelWindow.Count > 50)
 				{
 					labelWindow.RemoveAt(0);
 				}
-				if (allReceivedUDPPackets.Length > 50)
+				if (allReceivedUDPPackets.Length > 25)
 				{
 					allReceivedUDPPackets = "";
 				}
 				InputManager.current.popularLabel = getPopularLabel();
 				majorityLabel = InputManager.current.popularLabel;
-				if (majorityLabel != -1 || majorityLabel != 1)
+				if (majorityLabel != -1 && majorityLabel != 1)
 				{
 					for (int i = 0; i < labelWindow.Count; i++)
 					{

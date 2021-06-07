@@ -26,12 +26,14 @@ public class EventManager : Singleton<EventManager>
         eventTransition = false;
         if (targetWasEvent)
         {
+            Debug.Log("Target was event!");
             activityOccuring = true;
             motionLocked = true;
             InputManager.current.gUnlocked = true;
         }
         else 
         {
+            Debug.Log("Target was not event: Calling 'GameEvents.current.FeedingExit();'");
             GameEvents.current.FeedingExit();
         }
         targetWasEvent = !targetWasEvent;

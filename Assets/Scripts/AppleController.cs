@@ -107,8 +107,8 @@ public class AppleController : MonoBehaviour
         Vector3 inAirPos = transform.position;
         while (transform.position.y - target.position.y > 0.05f)
         {
-            float zIncrement = Mathf.Sqrt(Mathf.Pow(6f * Time.deltaTime, 2) / (Mathf.Pow(xzRatio, 2) + 1));
-            float xIncrement = zIncrement * xzRatio;
+            float zIncrement = Mathf.Sign(target.position.z - transform.position.z) * Mathf.Sqrt(Mathf.Pow(6f * Time.deltaTime, 2) / (Mathf.Pow(xzRatio, 2) + 1));
+            float xIncrement = Mathf.Sign(target.position.x - transform.position.x) * Mathf.Abs(zIncrement) * xzRatio;
             float hIncrement = Mathf.Sqrt(Mathf.Pow( xIncrement, 2) + Mathf.Pow( zIncrement, 2));
             cumulativeHorizontal += hIncrement;
             float newY = Mathf.Sqrt( ( ( horizontalDifference - cumulativeHorizontal ) * Mathf.Pow(yDifference, 2) ) / (horizontalDifference) ); 
