@@ -67,10 +67,10 @@ public class UDPObj : MonoBehaviour
 		+ "\n\nAll Messages: \n" + allReceivedUDPPackets
 			, style);
 
-		strMessageSend = GUI.TextField (new Rect (40, 420, 140, 20), strMessageSend);
-		if (GUI.Button (new Rect (190, 420, 40, 20), "send")) {
+		/* strMessageSend = GUI.TextField (new Rect (40, 420, 140, 20), strMessageSend);
+		 if (GUI.Button (new Rect (190, 420, 40, 20), "send")) {
 			sendData (strMessageSend + "\n");
-		}
+		}*/
 
 	}
 
