@@ -30,44 +30,52 @@ public class newTutorialController : MonoBehaviour
         if (InputManager.current.wUnlocked)
         {
             voiceString = "Move Forward";
-            TextController.Instance.textInstructions.text = "Open and close your palm to move forward";
+            TextController.Instance.textInstructions.text = "Close your grip to move forward";
+            tutorialHandAnimator.SetBool("Grip", true);
             if (InputManager.current.wPressed)
             {
                 timer = 0f;
                 TextController.Instance.TextActive(false);
                 firstVoice = true;
+                tutorialHandAnimator.SetBool("Extension", false);
             }
         }
         else if (InputManager.current.gUnlocked)
         {
             voiceString = "Pick Apple";
-            TextController.Instance.textInstructions.text = "Open and close your palm to gather an apple";
+            TextController.Instance.textInstructions.text = "Extend your wrist to gather an apple";
+            tutorialHandAnimator.SetBool("Extension", true);
             if (InputManager.current.wPressed)
             {
                 timer = 0f;
                 TextController.Instance.TextActive(false);
                 firstVoice = true;
+                tutorialHandAnimator.SetBool("Grip", false);            
             }
         }
         else if (InputManager.current.tUnlocked)
         {
             voiceString = "Feed Deer";
-            TextController.Instance.textInstructions.text = "Open and close your palm to feed the deer";
+            TextController.Instance.textInstructions.text = "Flex your wrist to feed the deer";
+            tutorialHandAnimator.SetBool("Flexion", true);
             if (InputManager.current.wPressed)
             {
                 timer = 0f;
                 TextController.Instance.TextActive(false);
                 firstVoice = true;
+                tutorialHandAnimator.SetBool("Flexion", false);
             }
         }
         else if (InputManager.current.aUnlocked || InputManager.current.dUnlocked)
         {
-            TextController.Instance.textInstructions.text = "Open and close your palm to wave";
+            TextController.Instance.textInstructions.text = "Rotate your wrist laterally to wave at the deer";
+            tutorialHandAnimator.SetBool("RadialUlnarDeviation", true);
             if ((InputManager.current.aUnlocked && InputManager.current.aPressed) || (InputManager.current.dUnlocked && InputManager.current.dPressed))
             {
                 timer = 0f;
                 TextController.Instance.TextActive(false);
                 firstVoice = true;
+                tutorialHandAnimator.SetBool("RadialUlnarDeviation", false);
             }
         }
 
@@ -75,7 +83,6 @@ public class newTutorialController : MonoBehaviour
         if (InputManager.current.wUnlocked || InputManager.current.gUnlocked || InputManager.current.tUnlocked || InputManager.current.aUnlocked || InputManager.current.dUnlocked)
         {
             handModel.enabled = true;
-            tutorialHandAnimator.SetBool("Grip", true);
             TextController.Instance.TextActive(true);
             
             if (firstVoice == true) { timerThreshold = 6f; }
@@ -86,7 +93,7 @@ public class newTutorialController : MonoBehaviour
                 timer = 0f;
                 if (!InputManager.current.aUnlocked && !InputManager.current.dUnlocked)
                 {
-                    TextController.Instance.PlayVoice(voiceString);
+                    //TextController.Instance.PlayVoice(voiceString);
                 }
                 firstVoice = false;
             }
@@ -102,6 +109,9 @@ public class newTutorialController : MonoBehaviour
         else
         {
             tutorialHandAnimator.SetBool("Grip", false);
+            tutorialHandAnimator.SetBool("Extension", false);
+            tutorialHandAnimator.SetBool("Flexion", false);
+            tutorialHandAnimator.SetBool("RadialUlnarDeviation", false);
             handModel.enabled = false;
         }
 

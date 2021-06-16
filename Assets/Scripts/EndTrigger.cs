@@ -109,7 +109,7 @@ public class EndTrigger : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
-        TextController.Instance.PlayVoice("Wave Goodbye");
+        // TextController.Instance.PlayVoice("Wave Goodbye");
         InputManager.current.aUnlocked = true;
         yield return null;
     }

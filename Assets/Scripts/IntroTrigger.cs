@@ -94,7 +94,7 @@ public class IntroTrigger : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
-        TextController.Instance.PlayVoice("Attract Attention");
+        //TextController.Instance.PlayVoice("Attract Attention");
         InputManager.current.aUnlocked = true;
         yield return null;
     }
